@@ -1,7 +1,7 @@
 # Distributed SQL for Microservices with Kubernetes
 ## Demo repo for Chicago Microservices Meetup with CockroachDB
 
-## Demo topics 1 - Instal without an persistent volume autoprovisioner
+## Demo topics 1 - Install without an persistent volume autoprovisioner
 
 ### Attempt to install using a Helm Chart
 
@@ -9,7 +9,7 @@
 
 [Attempt details here...](ATTEMPT-HELM-INSTALL.md)
 
-### Manual Kubernetes Install (assumes PV autoprovisioning)
+### Manual Kubernetes Install (assumes PV auto provisioner)
 [Here are the Cockroach DB Docs as a starting point - Kubernetes manual install](https://www.cockroachlabs.com/docs/stable/orchestrate-cockroachdb-with-kubernetes.html#manual)
 
 #### Running on Bare Metal Docker Enterprise OR Kubernetes on Docker Desktop using manual persistent volume provisioning
