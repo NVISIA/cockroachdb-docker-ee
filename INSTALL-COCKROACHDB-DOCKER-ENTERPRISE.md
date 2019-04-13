@@ -60,7 +60,7 @@ root@cockroachdb-public:26257/defaultdb>
 >\q 
 ```
 
-## Set up tunned to NodePort Service on ephemeral port
+## Set up tunnel to NodePort Service on ephemeral port
 
 ```bash
 kubectl get svc cockroachdb-public
