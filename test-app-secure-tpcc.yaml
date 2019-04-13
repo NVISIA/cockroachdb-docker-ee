@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: tpcc-loadgen-secure-cdb
+  namespace: cockroachdb
+spec:
+  template:
+    metadata:
+      labels:
+        app: tpcc-loadgen
+    spec:
+      restartPolicy: OnFailure
+      serviceAccountName: cockroachdb
+      volumes:
+      - name: client-certs
+        emptyDir: {}
+      initContainers:
+      - name: init-certs
+        image: cockroachdb/cockroach-k8s-request-cert:0.4
+        imagePullPolicy: IfNotPresent
+        command:
+        - "/bin/ash"
+        - "-ecx"
+        - "/request-cert -namespace=${POD_NAMESPACE} -certs-dir=/cockroach-certs -type=client -user=root -symlink-ca-from=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        volumeMounts:
+        - name: client-certs
+          mountPath: /cockroach-certs
+      containers:
+      - name: cockroachdb-workload-tpcc
+        image: cockroachdb/cockroach:v2.1.6
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: client-certs
+          mountPath: /cockroach-certs
+        command:
+          - "/cockroach/cockroach"
+          - "workload" 
+          - "run" 
+          - "tpcc" 
+          - "--drop"
+          - "--init"
+          - "--duration=1m" 
+          - "postgres://root@cockroachdb-public:26257?sslmode=verify-full&sslcert=/cockroach-certs/client.root.crt&sslkey=/cockroach-certs/client.root.key&sslrootcert=/cockroach-certs/ca.crt"
