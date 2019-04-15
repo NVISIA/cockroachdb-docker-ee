@@ -28,6 +28,7 @@
 
 ## Demo topic 4 - Clean up
 
-### Cleanup section of (INSTALL-COCKROACHDB-DOCKER-ENTERPRISE.md)
+### Cleanup 
+Use the last section section of the [install document](INSTALL-COCKROACHDB-DOCKER-ENTERPRISE.md)
 
 ## Bonus topic - Sysdig monitoring of Docker EE
